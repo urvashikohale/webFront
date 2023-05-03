@@ -1,0 +1,50 @@
+div>.navbar{
+    background-color: black;
+}
+
+.appbar{
+    background-image: linear-gradient(to right , #5908A1 0%, #AB4DFC 100%);
+}
+
+.toolbar{
+    display: "flex";
+    justify-content: "space-between";
+    width: "100%";
+}
+
+/* .socialBookText{
+    margin-right: 2;
+    font-family: "proxima-nova";
+    font-size: 31px;
+    font-weight: 800;
+} */
+
+.searchList{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    position: absolute;
+    list-style: none;
+    background-color: #f1f1f1;
+    overflow: auto;
+    max-height: 200;
+    border-radius: 0 0 10px 10px;
+    border: none
+}
+
+.searchPaper{
+    text-decoration: none;
+}
+
+.searchText{
+    padding-left: 6px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    color: black;
+}
+
+.homeIcon{
+    font-size:20rem;
+    color: #FFFFFF;
+}

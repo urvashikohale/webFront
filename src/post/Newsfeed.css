@@ -1,0 +1,35 @@
+body{
+    background-color: #F0F2F5;
+}
+
+.fullpagee{
+    width: 100%;
+    height:100vh;
+    background-color: #F0F2F5;
+}
+/* #heading{
+    margin-bottom: 10%;
+} */
+#post{
+    margin-top: 10%;
+}
+#blockContainer
+{
+    text-align:center;
+    background-color: #FFFFFF;
+}
+#block1, #block2
+{
+    display:inline;
+}
+#block1{
+    float: left;
+}
+#block2{
+    float: right;
+}
+
+.newsfeed{
+    background-color: #FFFFFF;
+    background-image: none;
+}

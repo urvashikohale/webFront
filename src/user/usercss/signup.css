@@ -1,0 +1,54 @@
+.formSign{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.signFormm{
+    height: 60vh;
+    width: 30vw;
+    margin-left: 0;
+    padding: 0;
+    gap: 2rem;
+    background-image: linear-gradient(to right, #5908A1 0%, #AB4DFC 100%);
+}
+
+.fullName{
+    width: 20vw;
+}
+
+.email{
+    width: 20vw;
+}
+
+.password{
+    width:20vw
+}
+.buttonSign{
+    width: 20vw;
+    background-color: #3be919;
+    border: 1px solid #3be919;
+    padding:15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    color:#FFFFFF;
+    font-size: 17px;
+    font-family: 'Arial';
+    font-weight: 600;
+    transition: 0.5s;
+} 
+.buttonSign:hover{
+    border: 1px solid #41c926;
+    background-color: #41c926;
+    color: white;
+    cursor: pointer;
+}
+
+.success{
+    display: flex;
+}
+
+
