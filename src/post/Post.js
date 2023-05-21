@@ -100,7 +100,7 @@ export default function Post(props) {
         }
         title={
           <Link
-            to={"/user/" + props.post.postedBy._id}
+            to={`${API}/user/` + props.post.postedBy._id}
             style={{
               textDecoration: "none",
               color: "#000000",

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { AppBar, Tabs, Tab, Typography } from "@mui/material";
 import PostList from "./../post/PostList";
 import FollowGrid from "./FollowGrid";
+import { purple } from "@mui/material/colors";
 
 export default function ProfileTabs(props) {
   const [tab, setTab] = useState(0);
@@ -10,41 +11,39 @@ export default function ProfileTabs(props) {
   const handleTabChange = (event, value) => {
     setTab(value);
   };
+  const accent = purple;
 
   return (
     <div>
       <AppBar
         position="static"
-        // color="default"
-        sx={{
-          marginTop: 1.5,
-          marginBottom: 0,
-          backgroundColor: " #FFFFFF ",
-          borderRadius: "5px",
-        }}
+        color="default"
+        // sx={{
+        //   marginTop: 1.5,
+        //   marginBottom: 0,
+        //   backgroundColor: " #FFFFFF ",
+        //   borderRadius: "5px",
+        // }}
       >
         <Tabs
           value={tab}
           onChange={handleTabChange}
-          // TabIndicatorProps={{
-          //   style: {
-          //     backgroundColor: "#AB4DFC",
-          //   },
-          // }}
-          indicatorColor="none"
-          // textColor="white"
-          sx={{
-            color: "#FFFFFF",
-            marginBottom: 0,
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#AB4DFC",
+              // color: "#AB4DFC",
+            },
           }}
+          // indicatorColor="secondary"
+          textColor="secondary"
           variant="fullWidth"
+          // textColor="white"
+          // sx={{
+          //   color: "#FFFFFF",
+          //   marginBottom: 0,
+          // }}
         >
-          <Tab
-            label="Posts"
-            style={{
-              color: "#AB4DFC",
-            }}
-          />
+          <Tab label="Posts" />
           <Tab label="Following" />
           <Tab label="Followers" />
         </Tabs>

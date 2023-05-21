@@ -1,7 +1,6 @@
 import { API } from "../../backend";
 
 export const read = async (params, credentials, signal) => {
-  console.log("apIIII", params.userId);
   try {
     let response = await fetch(`${API}/users/` + params.userId, {
       method: "GET",
@@ -62,8 +61,11 @@ export const remove = async (params, credentials) => {
 };
 
 export const follow = async (params, credentials, followId) => {
+  console.log("PARAMSS", params.userId);
+  console.log("CREDENTIALS", credentials.t);
+  console.log("FOLLOW", followId);
   try {
-    let response = await fetch(`${API}/users/follow/` + params.userId, {
+    let response = await fetch(`${API}/users/follow/`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -73,8 +75,9 @@ export const follow = async (params, credentials, followId) => {
       body: JSON.stringify({ userId: params.userId, followId: followId }),
     });
     return await response.json();
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
@@ -95,6 +98,24 @@ export const unfollow = async (params, credentials, unfollowId) => {
   }
 };
 
+// export const findPeople = async (params, credentials, signal) => {
+//   try {
+//     let response = await fetch(`${API}/users/findpeople/` + params.userId, {
+//       method: "GET",
+//       signal: signal,
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         Authorization: "Bearer " + credentials.token,
+//       },
+//     });
+//     //console.log("FINDRESPONSE", response.json())
+//     return await response.json();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const findPeople = async (params, credentials, signal) => {
   try {
     let response = await fetch(`${API}/users/findpeople/` + params.userId, {
@@ -109,6 +130,7 @@ export const findPeople = async (params, credentials, signal) => {
     return await response.json();
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 

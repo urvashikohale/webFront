@@ -17,8 +17,11 @@ import {
   Snackbar,
   ListItemText,
   IconButton,
+  Divider,
 } from "@mui/material";
 import ViewIcon from "@mui/icons-material/Visibility";
+import Menuu from "../core/Menu";
+
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../firebase-messaging-sw";
 const FindPeople = () => {
@@ -42,15 +45,13 @@ const FindPeople = () => {
 
       signal
     ).then((data) => {
-      console.log("userIdfindd", isAuthenticated().user._id);
-
       if (data && data.error) {
         console.log(data.error);
       } else {
         setValues({ ...values, users: data });
-        console.log("FUSERRR", values.users);
       }
     });
+
     return function cleanup() {
       abortController.abort();
     };
@@ -90,50 +91,71 @@ const FindPeople = () => {
   };
   return (
     <div>
-      <Paper elevation={4}>
-        <Typography type="title">Who to follow</Typography>
-        <List>
-          {values.users.map((item, i) => {
-            return (
-              <span key={i}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar src={`${API}/users/photo/` + item._id} />
-                  </ListItemAvatar>
-                  <ListItemText primary={item.name} />
-                  <ListItemSecondaryAction>
-                    <Link to={`${API}/user/` + item._id}>
-                      <IconButton variant="contained" color="secondary">
-                        <ViewIcon />
-                      </IconButton>
-                    </Link>
-                    <Button
-                      aria-label="Follow"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        clickFollow(item, i);
-                      }}
-                    >
-                      Follow
-                    </Button>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </span>
-            );
-          })}
-        </List>
-      </Paper>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+      <Menuu />
+      <div
+        style={{
+          // position: "absolute",
+          marginTop: "6%",
+          display: "flex",
+          justifyContent: "center",
         }}
-        open={values.open}
-        onClose={handleRequestClose}
-        autoHideDuration={6000}
-        message={<span>{values.followMessage}</span>}
-      />
+      >
+        <Paper elevation={4} style={{ width: "100vw", maxWidth: 900 }}>
+          <Typography
+            type="title"
+            style={{
+              height: 50,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            People You May Follow
+          </Typography>
+          <Divider />
+          <List>
+            {values.users.map((item, i) => {
+              return (
+                <span key={i}>
+                  <ListItem style={{ height: 70 }}>
+                    <ListItemAvatar>
+                      <Avatar src={`${API}/users/photo/` + item._id} />
+                    </ListItemAvatar>
+                    <ListItemText primary={item.name} />
+                    <ListItemSecondaryAction>
+                      <Link to={`${API}/user/` + item._id}>
+                        <IconButton variant="contained" color="secondary">
+                          <ViewIcon />
+                        </IconButton>
+                      </Link>
+                      <Button
+                        aria-label="Follow"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          clickFollow(item, i);
+                        }}
+                      >
+                        Follow
+                      </Button>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                  <Divider />
+                </span>
+              );
+            })}
+          </List>
+        </Paper>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          open={values.open}
+          onClose={handleRequestClose}
+          autoHideDuration={6000}
+          message={<span>{values.followMessage}</span>}
+        />
+      </div>
     </div>
   );
 };

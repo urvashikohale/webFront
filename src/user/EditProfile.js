@@ -29,6 +29,7 @@ import styled from "styled-components";
 import { isAuthenticated } from "../auth/helper";
 import { read } from "./helper/userapi";
 import Profile from "./Profile";
+import Menuu from "../core/Menu";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const EditProfile = () => {
     name: "",
     about: "",
     password: "",
+    email: "",
     createdUser: "",
     redirectToProfile: false,
     loading: false,
@@ -49,6 +51,7 @@ const EditProfile = () => {
     name,
     about,
     password,
+    email,
     createdUser,
     redirectToProfile,
     error,
@@ -140,7 +143,12 @@ const EditProfile = () => {
   const { imagePreviewUrl } = state;
   const photoUrl = values.id
     ? `${API}/users/photo/${values.id}?${new Date().getTime()}`
-    : `${API}/users/defaultphoto`;
+    : `${API}/users/defaultphoto/${values.id}`;
+
+  // const photoUrl = values.user._id
+  // ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
+  // : null;
+
   if (values.redirectToProfile) {
     return <Navigate to={"/user/" + values.id} />;
   }
@@ -152,7 +160,7 @@ const EditProfile = () => {
 
   return (
     <div>
-      <Navbar />
+      <Menuu />
       <div
         style={{ width: "100%", height: "100vh", backgroundColor: "#F0F2F5" }}
       >
@@ -230,7 +238,7 @@ const EditProfile = () => {
             <TextField
               id="standard-read-only-input"
               label="Name"
-              value={values.name}
+              value={name}
               onChange={handleChange("name")}
               // defaultValue="Hello World"
               InputProps={{
@@ -250,7 +258,7 @@ const EditProfile = () => {
           >
             <TextField
               id="standard-basic"
-              value={values.email}
+              value={email}
               variant="standard"
               disabled
               sx={{ width: "80%" }}
@@ -268,7 +276,7 @@ const EditProfile = () => {
               id="standard-password-input"
               label="Password"
               type="password"
-              value={values.password}
+              value={password}
               onChange={handleChange("password")}
               autoComplete="current-password"
               variant="standard"
@@ -325,7 +333,7 @@ const EditProfile = () => {
               id="multiline-flexible"
               multiline
               rows="2"
-              value={values.about}
+              value={about}
               onChange={handleChange("about")}
               margin="normal"
               sx={{ width: "80%" }}

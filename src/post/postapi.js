@@ -48,8 +48,9 @@ export const listNewsFeed = async (params, credentials, signal) => {
       },
     });
     return await response.json();
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 

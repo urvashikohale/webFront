@@ -18,6 +18,7 @@ import { isAuthenticated } from "../auth/helper";
 import { API } from "../backend";
 import { create } from "./postapi";
 import { flexbox } from "@mui/system";
+import profileImage from "../assets/images/profileImage.jpg";
 
 const NewPost = (props) => {
   const [values, setValues] = useState({
@@ -57,8 +58,13 @@ const NewPost = (props) => {
     setValues({ ...values, [name]: value });
   };
   const photoURL = values.user._id
-    ? `${API}/users/photo/` + values.user._id
-    : `${API}/users/defaultphoto`;
+    ? `${API}/users/photo/${values.user._id}`
+    : `${API}/users/defaultphoto/${values.user._id}`;
+
+  // const photoURL = values.user._id
+  //   ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
+  //   : null;
+
   return (
     <div
       style={{

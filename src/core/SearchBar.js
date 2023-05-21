@@ -5,6 +5,7 @@ import { isAuthenticated } from "../auth/helper";
 import { Link } from "react-router-dom";
 import { Divider, Paper, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { API } from "../backend";
 
 const SearchBar = () => {
   const [user, setUsers] = useState([]);
@@ -73,7 +74,7 @@ const SearchBar = () => {
             {filteredData.map((value, key) => {
               return (
                 <Link
-                  to={"/user/" + value._id}
+                  to={`${API}/user/` + value._id}
                   style={{ textDecoration: "none" }}
                 >
                   <Typography

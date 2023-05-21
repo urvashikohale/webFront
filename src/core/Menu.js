@@ -23,8 +23,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchBar from "./SearchBar";
 import { findPeople, read } from "../user/helper/userapi";
-import { Link, useParams } from "react-router-dom";
-import { isAuthenticated } from "../auth/helper";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { isAuthenticated, logout } from "../auth/helper";
 import { API } from "../backend";
 
 const StyledToolbar = styled(Toolbar)({
@@ -74,6 +74,7 @@ const Menuu = () => {
   const [user, setUsers] = useState([]);
 
   const [filteredData, setFilterData] = useState([]);
+  const navigate = useNavigate();
 
   // const [values, setValues] = useState({
   //   user: { photo: "" },
@@ -99,7 +100,7 @@ const Menuu = () => {
     const signal = abortController.signal;
     read(
       {
-        userId: userId,
+        userId: isAuthenticated().user._id,
       },
       { token: isAuthenticated().token },
       signal
@@ -119,7 +120,6 @@ const Menuu = () => {
       },
       signal
     ).then((data) => {
-      console.log("finddpeople", data);
       if (data.error) {
         console.log(data.error);
       } else {
@@ -154,9 +154,13 @@ const Menuu = () => {
     }
   };
 
-  const photoUrl = isAuthenticated().user._id
-    ? `${API}/users/photo/` + isAuthenticated().user._id
-    : `${API}/users/defaultphoto`;
+  const photoUrl = values.user._id
+    ? `${API}/users/photo/${values.user._id}`
+    : `${API}/users/defaultphoto/${values.user._id}`;
+
+  // const photoUrl = isAuthenticated().user._id
+  //   ? `${API}/users/photo/` + isAuthenticated().user._id
+  //   : null;
 
   return (
     <AppBar
@@ -213,9 +217,9 @@ const Menuu = () => {
             <Stack spacing={2}>
               {filteredData.length != 0 && (
                 <List
-                  className="searchList"
+                  // className="searchList"
                   sx={{
-                    width: "100%",
+                    width: 350,
                     margin: 0,
                     padding: 0,
                     zIndex: 1,
@@ -230,9 +234,8 @@ const Menuu = () => {
                   }}
                 >
                   {filteredData.map((value, key) => {
-                    console.log("va;uesid", value._id);
                     return (
-                      <Paper>
+                      <Paper key={value._id}>
                         <Link
                           to={`${API}/users/` + value._id}
                           className="searchPaper"
@@ -262,7 +265,7 @@ const Menuu = () => {
             sx={{
               display: {
                 xs: "none",
-                lg: "flex",
+                sm: "flex",
               },
               gap: "20px",
               marginRight: "16rem",
@@ -297,7 +300,7 @@ const Menuu = () => {
             },
           }}
         >
-          <Link to="/findpeople">
+          <Link to={"/users/findpeople/" + isAuthenticated().user._id}>
             <PeopleIcon
               sx={{
                 display: { xs: "none", sm: "flex" },
@@ -306,29 +309,35 @@ const Menuu = () => {
               }}
             />
           </Link>
-          <Badge badgeContent={4} color="error">
+          {/* <Badge badgeContent={4} color="error">
             <NotificationsIcon sx={{ fontSize: "28px" }} />
-          </Badge>
-          <Button
-            // onClick={logout}
+          </Badge> */}
+          {isAuthenticated() && (
+            <Button
+              onClick={() => {
+                logout(() => {
+                  navigate("/");
+                });
+              }}
+              sx={{
+                backgroundColor: "transparent",
+                color: "#FFFFFF",
+                border: "none",
+                // border: "2px solid #FFFFFF",
+                borderRadius: "5px",
+                //   padding: "8px 9px",
+                fontWeight: "bold",
+                ":hover": {
+                  bgcolor: "#812ACD",
+                  boxShadow:
+                    " 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.10)",
+                },
+              }}
+            >
+              logout
+            </Button>
+          )}
 
-            sx={{
-              backgroundColor: "transparent",
-              color: "#FFFFFF",
-              border: "none",
-              // border: "2px solid #FFFFFF",
-              borderRadius: "5px",
-              //   padding: "8px 9px",
-              fontWeight: "bold",
-              ":hover": {
-                bgcolor: "#812ACD",
-                boxShadow:
-                  " 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.10)",
-              },
-            }}
-          >
-            logout
-          </Button>
           <Link
             to={"/user/" + isAuthenticated().user._id}
             style={{ textDecoration: "none" }}

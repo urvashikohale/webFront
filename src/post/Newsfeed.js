@@ -75,41 +75,41 @@ const Newsfeed = () => {
     //   });
 
     // Notification.requestPermission();
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.");
-        // TODO(developer): Retrieve a registration token for use with FCM.
+    // Notification.requestPermission().then((permission) => {
+    //   if (permission === "granted") {
+    //     console.log("Notification permission granted.");
+    //     // TODO(developer): Retrieve a registration token for use with FCM.
 
-        getToken(messaging, {
-          vapidKey:
-            "BGCGuhn-rYLSDIwlhTgDuE5ni_KZoGw1YKZKuo-u56qGYhaAMfwelCNU05xOZtNzih4ImUtetdGn_L5PuPEZOkY",
-        })
-          .then((token) => {
-            // const userId = "63d94337b298feed4d32d41d";
-            const userId = isAuthenticated().user._id;
-            const sendTokenToServer = (userId, token) => {
-              fetch(`${API}/fcmtoken/${userId}`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ token }),
-              })
-                .then((response) => response.json())
-                .then((data) => console.log(data))
-                .catch((err) => console.error(err));
-            };
-            sendTokenToServer(userId, token);
-            // send the token to the server
-          })
-          .catch((err) => {
-            console.log("Error getting token:", err);
-          });
-      } else {
-        // deleteToken(token);
-        console.log("Unable to get permission to notify.");
-      }
-    });
+    //     getToken(messaging, {
+    //       vapidKey:
+    //         "BGCGuhn-rYLSDIwlhTgDuE5ni_KZoGw1YKZKuo-u56qGYhaAMfwelCNU05xOZtNzih4ImUtetdGn_L5PuPEZOkY",
+    //     })
+    //       .then((token) => {
+    //         // const userId = "63d94337b298feed4d32d41d";
+    //         const userId = isAuthenticated().user._id;
+    //         const sendTokenToServer = (userId, token) => {
+    //           fetch(`${API}/fcmtoken/${userId}`, {
+    //             method: "POST",
+    //             headers: {
+    //               "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({ token }),
+    //           })
+    //             .then((response) => response.json())
+    //             .then((data) => console.log(data))
+    //             .catch((err) => console.error(err));
+    //         };
+    //         sendTokenToServer(userId, token);
+    //         // send the token to the server
+    //       })
+    //       .catch((err) => {
+    //         console.log("Error getting token:", err);
+    //       });
+    //   } else {
+    //     // deleteToken(token);
+    //     console.log("Unable to get permission to notify.");
+    //   }
+    // });
 
     listNewsFeed(
       {
@@ -119,18 +119,16 @@ const Newsfeed = () => {
         token: isAuthenticated().token,
       },
       signal
-    )
-      .then((data) => {
-        console.log("data aaa", data);
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          setPosts(data);
-        }
-      })
-      .catch((error) => {
-        console.log("NEWsFEED ERROR", error);
-      });
+    ).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setPosts(data);
+      }
+    });
+    // .catch((error) => {
+    //   console.log("NEWsFEED ERROR", error);
+    // });
     return function cleanup() {
       abortController.abort();
     };

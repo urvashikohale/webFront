@@ -107,7 +107,12 @@ const Profile = ({ match }) => {
 
   const photoUrl = values.user._id
     ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
-    : `${API}/users/defaultphoto`;
+    : `${API}/users/defaultphoto/${values.user._id}`;
+
+  // const photoUrl = values.user._id
+  //   ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
+  //   : null;
+
   if (values.redirectToSignin) {
     return <Navigate to="/" />;
   }
