@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -154,9 +153,9 @@ const Menuu = () => {
     }
   };
 
-  const photoUrl = values.user._id
+  const photoUrl = values.user.photo
     ? `${API}/users/photo/${values.user._id}`
-    : `${API}/users/defaultphoto/${values.user._id}`;
+    : ` `;
 
   // const photoUrl = isAuthenticated().user._id
   //   ? `${API}/users/photo/` + isAuthenticated().user._id

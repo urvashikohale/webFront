@@ -22,12 +22,17 @@ export default function Post(props) {
   //   setValues({...values, like:checkLike(props.post.likes), likes: props.post.likes.length, comments: props.post.comments})
   // }, [])
   const checkLike = (likes) => {
-    let match = likes.indexOf(isAuthenticated().user._id) !== -1;
-    return match;
+    if (likes && Array.isArray(likes)) {
+      let match = likes.indexOf(isAuthenticated().user._id) !== -1;
+      return match;
+    }
+    return false;
   };
   const [values, setValues] = useState({
     like: checkLike(props.post.likes),
-    likes: props.post.likes.length,
+    likes:
+      props.post.likes && props.post.likes.length ? props.post.likes.length : 0,
+    // likes: props.post.likes.length,
   });
 
   // useEffect(() => {
@@ -100,7 +105,7 @@ export default function Post(props) {
         }
         title={
           <Link
-            to={`${API}/user/` + props.post.postedBy._id}
+            to={"/user/" + props.post.postedBy._id}
             style={{
               textDecoration: "none",
               color: "#000000",

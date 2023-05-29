@@ -71,6 +71,7 @@ export const remove = async (params, credentials) => {
 };
 
 export const like = async (params, credentials, postId) => {
+  console.log("PARAMSLIKE", params);
   try {
     let response = await fetch(`${API}/posts/like`, {
       method: "PUT",

@@ -141,9 +141,9 @@ const EditProfile = () => {
 
   // console.log(state);
   const { imagePreviewUrl } = state;
-  const photoUrl = values.id
+  const photoUrl = values.photo
     ? `${API}/users/photo/${values.id}?${new Date().getTime()}`
-    : `${API}/users/defaultphoto/${values.id}`;
+    : ``;
 
   // const photoUrl = values.user._id
   // ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`

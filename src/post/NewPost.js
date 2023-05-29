@@ -17,8 +17,11 @@ import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth/helper";
 import { API } from "../backend";
 import { create } from "./postapi";
+import { Link, useParams, useNavigate } from "react-router-dom";
+
 import { flexbox } from "@mui/system";
 import profileImage from "../assets/images/profileImage.jpg";
+import { read } from "../user/helper/userapi";
 
 const NewPost = (props) => {
   const [values, setValues] = useState({
@@ -29,8 +32,26 @@ const NewPost = (props) => {
     user: {},
   });
   useEffect(() => {
-    setValues({ ...values, user: isAuthenticated().user });
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    read(
+      {
+        userId: isAuthenticated().user._id,
+      },
+      { token: isAuthenticated().token },
+      signal
+    ).then((data) => {
+      if (data && data.error) {
+        setValues({ ...values, redirectToSignin: true });
+      } else {
+        setValues({ ...values, user: data });
+      }
+    });
   }, []);
+  // useEffect(() => {
+  //   setValues({ ...values, user: isAuthenticated().user });
+  //   console.log("NEWUSER", isAuthenticated().user);
+  // }, []);
   const clickPost = () => {
     let postData = new FormData();
     postData.append("text", values.text);
@@ -57,9 +78,9 @@ const NewPost = (props) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
     setValues({ ...values, [name]: value });
   };
-  const photoURL = values.user._id
+  const photoURL = values.user.photo
     ? `${API}/users/photo/${values.user._id}`
-    : `${API}/users/defaultphoto/${values.user._id}`;
+    : ``;
 
   // const photoURL = values.user._id
   //   ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
@@ -88,6 +109,7 @@ const NewPost = (props) => {
         <CardHeader
           avatar={
             <Avatar
+              alt={isAuthenticated().user.name}
               src={photoURL}
               sx={{
                 boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",

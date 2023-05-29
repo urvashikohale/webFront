@@ -22,8 +22,6 @@ import {
 import ViewIcon from "@mui/icons-material/Visibility";
 import Menuu from "../core/Menu";
 
-import { onMessage } from "firebase/messaging";
-import { messaging } from "../firebase-messaging-sw";
 const FindPeople = () => {
   const [values, setValues] = useState({
     users: [],
@@ -122,7 +120,7 @@ const FindPeople = () => {
                     </ListItemAvatar>
                     <ListItemText primary={item.name} />
                     <ListItemSecondaryAction>
-                      <Link to={`${API}/user/` + item._id}>
+                      <Link to={"/user/" + item._id}>
                         <IconButton variant="contained" color="secondary">
                           <ViewIcon />
                         </IconButton>

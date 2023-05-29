@@ -1,6 +1,4 @@
 import { Card, Divider, Typography, Grid } from "@mui/material";
-import { red, teal } from "@mui/material/colors";
-import { palette, spacing } from "@mui/system";
 import React from "react";
 import NewPost from "./NewPost";
 // import Navbar from "../core/Navbar";
@@ -12,13 +10,6 @@ import PostList from "./PostList";
 import SearchBar from "../core/SearchBar";
 import "./Newsfeed.css";
 import FindPeople from "../user/FindPeople";
-import { initializeApp } from "firebase/app";
-import {
-  deleteToken,
-  getMessaging,
-  getToken,
-  onMessage,
-} from "firebase/messaging";
 import { API } from "../backend";
 import { sendTokenToServer } from "../user/helper/userapi";
 import Menuu from "../core/Menu";
@@ -28,88 +19,6 @@ const Newsfeed = () => {
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-
-    // const { userId } = useParams();
-    const firebaseConfig = {
-      apiKey: "AIzaSyDcdI6ka8Jpf5NLMDoL7CJVpJwFnBzTMbI",
-      authDomain: "notification-20f5b.firebaseapp.com",
-      projectId: "notification-20f5b",
-      storageBucket: "notification-20f5b.appspot.com",
-      messagingSenderId: "764138157910",
-      appId: "1:764138157910:web:1c68ecffc85787c0d888f7",
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging(app);
-
-    // Notification.requestPermission();
-
-    // getToken(messaging, {
-    //   vapidKey:
-    //     "BGCGuhn-rYLSDIwlhTgDuE5ni_KZoGw1YKZKuo-u56qGYhaAMfwelCNU05xOZtNzih4ImUtetdGn_L5PuPEZOkY",
-    // })
-    //   .then((token) => {
-    //     console.log(token);
-
-    //     const userId = "63d94337b298feed4d32d41d";
-    //     const userId = isAuthenticated().user._id;
-    //     console.log("token userId", userId);
-    //     const sendTokenToServer = (userId, token) => {
-    //       fetch(`${API}/fcmtoken/${userId}`, {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({ token }),
-    //       })
-    //         .then((response) => response.json())
-    //         .then((data) => console.log(data))
-    //         .catch((err) => console.error(err));
-    //     };
-    //     sendTokenToServer(userId, token);
-    //     send the token to the server
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error getting token:", err);
-    //   });
-
-    // Notification.requestPermission();
-    // Notification.requestPermission().then((permission) => {
-    //   if (permission === "granted") {
-    //     console.log("Notification permission granted.");
-    //     // TODO(developer): Retrieve a registration token for use with FCM.
-
-    //     getToken(messaging, {
-    //       vapidKey:
-    //         "BGCGuhn-rYLSDIwlhTgDuE5ni_KZoGw1YKZKuo-u56qGYhaAMfwelCNU05xOZtNzih4ImUtetdGn_L5PuPEZOkY",
-    //     })
-    //       .then((token) => {
-    //         // const userId = "63d94337b298feed4d32d41d";
-    //         const userId = isAuthenticated().user._id;
-    //         const sendTokenToServer = (userId, token) => {
-    //           fetch(`${API}/fcmtoken/${userId}`, {
-    //             method: "POST",
-    //             headers: {
-    //               "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ token }),
-    //           })
-    //             .then((response) => response.json())
-    //             .then((data) => console.log(data))
-    //             .catch((err) => console.error(err));
-    //         };
-    //         sendTokenToServer(userId, token);
-    //         // send the token to the server
-    //       })
-    //       .catch((err) => {
-    //         console.log("Error getting token:", err);
-    //       });
-    //   } else {
-    //     // deleteToken(token);
-    //     console.log("Unable to get permission to notify.");
-    //   }
-    // });
 
     listNewsFeed(
       {
@@ -136,6 +45,7 @@ const Newsfeed = () => {
   const addPost = (post) => {
     const updatedPosts = [...posts];
     updatedPosts.unshift(post);
+
     setPosts(updatedPosts);
   };
   const removePost = (post) => {

@@ -105,9 +105,9 @@ const Profile = ({ match }) => {
   //   setPosts(updatedPosts);
   // };
 
-  const photoUrl = values.user._id
+  const photoUrl = values.user.photo
     ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`
-    : `${API}/users/defaultphoto/${values.user._id}`;
+    : ``;
 
   // const photoUrl = values.user._id
   //   ? `${API}/users/photo/${values.user._id}?${new Date().getTime()}`

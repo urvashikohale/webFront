@@ -133,16 +133,3 @@ export const findPeople = async (params, credentials, signal) => {
     throw error;
   }
 };
-
-// export const sendTokenToServer = (params, token) => {
-//   fetch(`${API}/fcmtoken/` + params.userId, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ token }),
-//   })
-//     .then((response) => response.json())
-//     .then((data) => console.log(data))
-//     .catch((err) => console.error(err));
-// };
